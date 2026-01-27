@@ -30,7 +30,15 @@ int main(){
                             {"Denny" , 19, 2.0, "Freshman"}};
     for (int i = 0; i < 5; i++){
         students[i].printStudent();
+        cout << "\n";
     }
     cout << "\n";
+    string names[5] = {"John" , "James", "Jimmy", "Jake", "Jerry"};
+    int ages[5] = {21,24,18,19,20};
+    float gpas[5]={3.0,2.2,3.4,4.0,2.1};
+    string gradeLevels[5] = {"Junior", "Freshman", "Sophomore" , "Senior", "Junior"};
+    for (int i = 0; i < 5; i++){
+        cout << " Name: "<< names[i] << " Age: " << ages[i] << " GPA: "<< gpas[i] << " Grade Level: " << gradeLevels[i] << "\n";
+    }
     return 0;
 }
