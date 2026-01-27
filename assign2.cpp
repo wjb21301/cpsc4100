@@ -21,8 +21,6 @@ class Student{
         void printStudent() const{
             cout << "Name: " << name << "Age: " << age << "GPA: " << gpa << "gradeLevel: " << gradeLevel;
         }
-
-
 };
 int main(){
     Student students[5] = {{"Jack" , 24, 3.2 , "Senior"},
