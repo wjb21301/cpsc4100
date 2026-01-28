@@ -3,6 +3,7 @@
 #include <ctime>
 #include <vector>
 #include <limits>
+#include <string>
 using namespace std;
 
 int main(){
