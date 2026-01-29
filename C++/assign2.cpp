@@ -1,4 +1,9 @@
 #include <iostream>
+#include <string>
+#include <vector>
+#include <cstdlib>
+#include <utility>
+#include <ctime>
 using namespace std;
 class Student{
     public:
@@ -22,6 +27,28 @@ class Student{
             cout << "Name: " << name << "Age: " << age << "GPA: " << gpa << "gradeLevel: " << gradeLevel;
         }
 };
+void quicksort(int arr[], int small, int large){
+    if (small < large){
+        int pivot = partition(arr, small, large);
+        quicksort(arr, small, pivot - 1);
+        quicksort(arr, pivot + 1, large);
+
+    }
+
+}
+int partition(int arr[], int small, int large){
+    srand(time(0));
+    int randomIndex = small + rand() % (large - small + 1);
+    int pivot = arr[randomIndex];
+    
+
+
+    
+}
+
+
+    
+
 int main(){
     Student students[5] = {{"Jack" , 24, 3.2 , "Senior"},
                             {"Jerry" , 18, 3.9, "Junior"} , 
