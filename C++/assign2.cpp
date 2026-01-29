@@ -27,6 +27,21 @@ class Student{
             cout << "Name: " << name << "Age: " << age << "GPA: " << gpa << "gradeLevel: " << gradeLevel;
         }
 };
+int partition(int arr[], int small, int large){
+    int randomIndex = small + rand() % (large - small + 1);
+    swap(arr[randomIndex], arr[large]);
+    int pivot = arr[large];
+    int i = small - 1;
+    for (int j = small; j < large; j++){
+        if (arr[j] < pivot){
+            i = i+1;
+            swap(arr[i], arr[j]);
+
+        }
+    }
+    swap(arr[i+1], arr[large]);
+    return i + 1;   
+}
 void quicksort(int arr[], int small, int large){
     if (small < large){
         int pivot = partition(arr, small, large);
@@ -34,22 +49,9 @@ void quicksort(int arr[], int small, int large){
         quicksort(arr, pivot + 1, large);
 
     }
-
 }
-int partition(int arr[], int small, int large){
-    srand(time(0));
-    int randomIndex = small + rand() % (large - small + 1);
-    int pivot = arr[randomIndex];
-    
-
-
-    
-}
-
-
-    
-
 int main(){
+    srand(time(0));
     Student students[5] = {{"Jack" , 24, 3.2 , "Senior"},
                             {"Jerry" , 18, 3.9, "Junior"} , 
                             {"Bill", 20 , 2.5, "Freshman"} , 
@@ -67,5 +69,21 @@ int main(){
     for (int i = 0; i < 5; i++){
         cout << " Name: "<< names[i] << " Age: " << ages[i] << " GPA: "<< gpas[i] << " Grade Level: " << gradeLevels[i] << "\n";
     }
+    int arr[] = {8, 3, 7, 6, 2, 5, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Before sorting: ";
+    for (int i = 0; i < n; i++){
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    quicksort(arr, 0, n - 1);
+
+    cout << "After sorting: ";
+    for (int i = 0; i < n; i++){
+        cout << arr[i] << " ";
+    }
+    cout << endl;
     return 0;
 }
