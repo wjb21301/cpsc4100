@@ -11,13 +11,13 @@ int main(void) {
 		if (currState == 0 && input[i] == '0') {
 			nextState = 2;
 		}
-		if (currState == 0 && input[i] == '1') {
+		else if (currState == 0 && input[i] == '1') {
 			nextState = 1;
 		}
-		if (currState == 1 && (input[i] == '0' || input[i] == '1')) {
+		else if (currState == 1 && (input[i] == '0' || input[i] == '1')) {
 			nextState = 2;
 		}
-		if (currState == 2 && (input[i] == '0' || input[i] == '1')) {
+		else if (currState == 2 && (input[i] == '0' || input[i] == '1')) {
 			nextState = 1;
 		}
 		currState = nextState;
