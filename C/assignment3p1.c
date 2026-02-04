@@ -16,20 +16,20 @@ int main(void)
 			printf("Dead state reached.");
 			return;
 		}
-		if (currState == acceptedState) {
+		else if (currState == acceptedState) {
 			printf("Input accepted!!");
 			return;
 		}
-		if (currState == 0 && (input[i] == '1' || input[i] == '0')) {
+		else if (currState == 0 && (input[i] == '1' || input[i] == '0')) {
 			nextState = 1;
 		}
-		if (currState == 1 && (input[i] == '1' || input[i] == '0')) {
+		else if (currState == 1 && (input[i] == '1' || input[i] == '0')) {
 			nextState = 2;
 		}
-		if (currState == 2 && input[i] == '0') {
+		else if (currState == 2 && input[i] == '0') {
 			nextState = 3;
 		}
-		if (currState == 2 && input[i] == '1') {
+		else if (currState == 2 && input[i] == '1') {
 			nextState = 4;
 		}
 		currState = nextState;
