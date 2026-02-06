@@ -14,11 +14,10 @@ int main(void)
 		nextState = deadState;
 		if (currState == deadState) {
 			printf("Dead state reached.");
-			return;
+			break;
 		}
 		else if (currState == acceptedState) {
 			printf("Input accepted!!");
-			return;
 		}
 		else if (currState == 0 && (input[i] == '1' || input[i] == '0')) {
 			nextState = 1;
