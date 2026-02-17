@@ -7,6 +7,8 @@ D → 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 */
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <math.h>
 char *input; // Pointer to input expression
 char token;  // Current token
 void nextToken()
@@ -15,38 +17,89 @@ void nextToken()
     while (token == ' ')
         token = *input++; // Skip spaces
 }
-int expr(); // Forward declaration
-int factor()
+float expr(); // Forward declaration
+float factor()
 {
-    if (isdigit(token))
-    { // Handle single-digit numbers
-        int num = token - '0';
+    if (token == '-')
+    {
         nextToken();
-        return num;
+        return -factor();
+    }
+    else if (token == '.')
+    {
+        nextToken();
+        float fraction = 0.0;
+        float divisor = 10.0;
+        while (isdigit(token))
+        {
+            fraction += (token - '0') / divisor;
+            divisor *= 10;
+            nextToken();
+        }
+        return fraction;
+    }
+    else if (isdigit(token))
+    {
+        float num = 0;
+        while (isdigit(token))
+        { // Problem 1 complete.
+            num = (num * 10) + token - '0';
+            nextToken();
+        }
+        float fraction = 0.0;
+        if (token == '.')
+        {
+            nextToken();
+            float divisor = 10.0;
+            while (isdigit(token))
+            {
+                fraction += (token - '0') / divisor;
+                divisor *= 10;
+                nextToken();
+            }
+        }
+        return num + fraction;
     }
     else if (token == '(')
     { // Handle parentheses
         nextToken();
-        int result = expr();
+        float result = expr();
         nextToken(); // Skip ')'
         return result;
     }
     return 0; // Default case (should handle errors properly)
 }
-int term()
+float power();
+float term()
 {
-    int result = factor();
+    float result = power();
     while (token == '*' || token == '/')
     { // Handle mult and div
         char op = token;
         nextToken();
-        result = (op == '*') ? result * factor() : result / factor();
+        if (op == '*')
+        {
+            result = result * power();
+        }
+        else if (op == '/')
+        {
+            float divisor = power();
+            if (divisor == 0.0f)
+            {
+                printf("Cannot divide by 0.\n");
+                exit(1);
+            }
+            else
+            {
+                result = result / divisor;
+            }
+        }
     }
     return result;
 }
-int expr()
+float expr()
 {
-    int result = term();
+    float result = term();
     while (token == '+' || token == '-')
     { // Handle addition/subtraction
         char op = token;
@@ -55,11 +108,22 @@ int expr()
     }
     return result;
 }
+float power(){
+    float base = factor();
+    if (token == '^'){
+        nextToken();
+        float exponent = power();
+        return powf(base,exponent);
+    }
+    return base;
+
+}
+
 int main()
 {
-    char expression[] = "5 + 2 * (4 - 1)";
+    char expression[] = "-2 ^ 3 + (40.5 - 1.5) * (3 ^ 2) / 1.5";
     input = expression;
     nextToken();
-    printf("Result: %d\n", expr()); // Evaluate and print result
+    printf("Result: %.2f\n", expr()); // Evaluate and print result
     return 0;
 }
