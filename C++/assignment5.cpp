@@ -13,10 +13,6 @@ struct NODE
 };
 
 
-NODE* CreateList(NODE *head)
-{
-	return NULL;
-}
 
 NODE* DeleteList(NODE *head)
 {
@@ -223,7 +219,7 @@ void PrintList(NODE *head)
 	cout << endl;
 
 }
-void reverseList(NODE *head)
+void reverseList(NODE*& head)
 {
 	NODE *cur, *previous, *next;
 
@@ -244,24 +240,34 @@ void reverseList(NODE *head)
 }
 NODE* mergeSortedLists(NODE *l1, NODE *l2)
 {
+	if (l1 == NULL)
+	{
+		return l2;
+	}
+	if (l2 == NULL)
+	{
+		return l1;
+	}
+	if (l1->data < l2->data){
+		l1->next=mergeSortedLists(l1->next, l2);
+		return l1;
+	}
+	else
+	{
+		l2->next = mergeSortedLists(l1,l2->next);
+		return l2;
+	}
 	
 }
-void removeDuplicates(NODE *head)
-{
-
-}
-
-
-
 int main(int argc, char* argv[])
 {
+	NODE *head1 = NULL;
+	NODE *head2 = NULL;
 	int choice = 1;
 	NODE *head;
 	NODE *tmp;
 	int val, val1;
 	bool result;
-	
-	head = CreateList(head);
 
 	cout << "A list of integers has been created (it will be sorted by increasing order) " << endl;
 	
@@ -269,15 +275,14 @@ int main(int argc, char* argv[])
 	{
 		cout << endl
 			 << "     ======================" << endl
-		     << "     1: InsertElement() : " << endl
-			 << "     2: DeleteElement() : " << endl
-			 << "     3: SearchElement() : " << endl
-			 << "     4: IsInList()      : " << endl
-			 << "     5: ModifyElement() : " << endl
-			 << "     6: PrintList()     : " << endl
-			 << "     7: GetEltNbr()     : " << endl
-			 << "     8: DeleteList()    : " <<endl
-			 << "     9: GetEltNbrRec()  : " << endl
+		     << "     1: InsertElement to list 1 : " << endl
+			 << "     2: Insert Element to list 2 : " << endl
+			 << "     3: Reverse List 1 : " << endl
+			 << "     4: Reverse List 2 : " << endl
+			 << "     5: Merge lists : " << endl
+			 << "     6: Remove Dupes from sorted List: " << endl
+			 << "     7: Print list 1: " << endl
+			 << "     8: Print list 2: " << endl
 			 << "     ======================" << endl
 			 << "     0: Quit" << endl
 			 << "     ======================" << endl
@@ -292,7 +297,7 @@ int main(int argc, char* argv[])
 		case 1 :
 			cout << "Type the element's value : ";
 			cin >> val;
-			head = InsertElement(head, val, result);
+			head = InsertElement(head1, val, result);
 			if (result == false)
 			{
 				cout << "Insertion failed " << val << endl;
@@ -304,67 +309,42 @@ int main(int argc, char* argv[])
 			break;
 		
 		case 2 :
-			cout << "Type the value to delete : ";
+			cout << "Type the element's value : ";
 			cin >> val;
-			head = DeleteElement(head, val, result);
+			head = InsertElement(head2, val, result);
 			if (result == false)
-				cout << "Deletion failed : " << val << endl;
+			{
+				cout << "Insertion failed " << val << endl;
+				head = DeleteList(head);
+				exit(0);
+			}
 			else
-				cout << "The value "<< val << " has been deleted" << endl;
+				cout << "The value "<< val << " has been added" << endl;
 			break;
+			
 		
 		case 3 :
-			cout << "Type the value to search : ";
-			cin >> val;
-			tmp = SearchElement(head, val);
-			if (tmp == NULL)
-				cout << val << "is not in the list" << endl;
-			else
-				cout << "The value "<< val << "is in the list with address : " << tmp << endl;
+			reverseList(head1);
 			break;
 
 		case 4 :
-			cout << "type the value to search : ";
-			cin >> val;
-			if (IsInList(head, val))
-				cout << val << " is in the list" << endl;
-			else
-				cout << val << " is not in the list " << endl;
+			reverseList(head2);
 			break;
 
 		case 5 :
-			cout << "Type the old value : ";
-			cin >> val;
-			cout <<endl << "Type the new value : ";
-			cin >> val1;
-			head = ModifyElement(head, val, val1, result);
-			if (result == false)
-				cout << "Modification failed " << val << " en "<< val1 <<endl;
-			else
-				cout << "The value "<< val << " has been modified " << val1 <<endl;
-
+			mergeSortedLists(head1,head2);
 			break;
-
-		case 6 :
-			PrintList(head);
+		case 6:
 			break;
-
-		case 7 :
-			cout << "The list contains " << GetEltNbr(head) << " elements."<< endl;
+		case 7:
+			PrintList(head1);
 			break;
-		case 8 :
-			  head= DeleteList(head); 
-			  cout<<"The list has been deleted " << endl;
-			break;
-		case 9 :
-			cout << "The list contains " << GetEltNbrRec(head) << " elements."<< endl;
-			break;
+		case 8:
+			PrintList(head2);
 		case 0 :
 			break;
 		}
 	}
-
-
 	head = DeleteList(head);
 	cout << "The list has been deleted " << endl;
 
