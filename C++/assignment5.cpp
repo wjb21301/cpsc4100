@@ -1,5 +1,6 @@
 //
 // Singly linked list manipulation
+//  
 
 
 #include <iostream>
@@ -259,6 +260,24 @@ NODE* mergeSortedLists(NODE *l1, NODE *l2)
 	}
 	
 }
+void removeDupes(NODE *head)
+{
+	if (head == NULL) {
+		return;
+	}
+	NODE *cur = head;
+	while (cur->next != NULL)
+	{
+		if (cur->data == cur->next->data)
+		{
+			NODE *tmp = cur->next;
+			cur->next = cur->next->next;
+			delete tmp;
+		}
+		else
+			cur = cur->next;
+	}
+}
 int main(int argc, char* argv[])
 {
 	NODE *head1 = NULL;
@@ -279,10 +298,11 @@ int main(int argc, char* argv[])
 			 << "     2: Insert Element to list 2 : " << endl
 			 << "     3: Reverse List 1 : " << endl
 			 << "     4: Reverse List 2 : " << endl
-			 << "     5: Merge lists : " << endl
-			 << "     6: Remove Dupes from sorted List: " << endl
-			 << "     7: Print list 1: " << endl
-			 << "     8: Print list 2: " << endl
+			 << "     5: Merge lists (Will delete list 2): " << endl
+			 << "     6: Print list 1: " << endl
+			 << "     7: Print list 2: " << endl
+			 << "     8: Remove duplicates from sorted list 1: " << endl
+			 << "     9: Remove duplicates from sorted list 2: " << endl
 			 << "     ======================" << endl
 			 << "     0: Quit" << endl
 			 << "     ======================" << endl
@@ -297,32 +317,29 @@ int main(int argc, char* argv[])
 		case 1 :
 			cout << "Type the element's value : ";
 			cin >> val;
-			head = InsertElement(head1, val, result);
+			head1 = InsertElement(head1, val, result);
 			if (result == false)
 			{
 				cout << "Insertion failed " << val << endl;
-				head = DeleteList(head);
+				head1 = DeleteList(head1);
 				exit(0);
 			}
 			else
 				cout << "The value "<< val << " has been added" << endl;
-			break;
-		
+			break;	
 		case 2 :
 			cout << "Type the element's value : ";
 			cin >> val;
-			head = InsertElement(head2, val, result);
+			head2 = InsertElement(head2, val, result);
 			if (result == false)
 			{
 				cout << "Insertion failed " << val << endl;
-				head = DeleteList(head);
+				head2 = DeleteList(head2);
 				exit(0);
 			}
 			else
 				cout << "The value "<< val << " has been added" << endl;
 			break;
-			
-		
 		case 3 :
 			reverseList(head1);
 			break;
@@ -332,20 +349,27 @@ int main(int argc, char* argv[])
 			break;
 
 		case 5 :
-			mergeSortedLists(head1,head2);
+			head1 = mergeSortedLists(head1,head2);
+			head2 = NULL;
 			break;
 		case 6:
-			break;
-		case 7:
 			PrintList(head1);
 			break;
-		case 8:
+		case 7:
 			PrintList(head2);
+			break;
+		case 8:
+			removeDupes(head1);
+			break;
+		case 9:
+			removeDupes(head2);
+			break;
 		case 0 :
 			break;
 		}
 	}
-	head = DeleteList(head);
+	head1 = DeleteList(head1);
+	head2 = DeleteList(head2);
 	cout << "The list has been deleted " << endl;
 
 	return 0;
