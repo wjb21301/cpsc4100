@@ -35,3 +35,8 @@ C/assignment3p4
 C/assingment4
 C/assign4
 C++/assign5
+#Scala stuff
+.metals/
+.bloop/
+target/
+.vscode/
