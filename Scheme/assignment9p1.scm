@@ -1,0 +1,23 @@
+(define (range start end)
+  (if (> start end)
+      '()
+      (cons start (range (+ start 1) end))))
+(define (remove-mults n lst)
+  (cond ((null? lst) '())
+        ((= (remainder (car lst) n) 0)
+         (remove-mults n (cdr lst)))
+        (else
+         (cons (car lst)
+               (remove-mults n (cdr lst))))))
+(define (sieve lst limit)
+  (cond
+    ((null? lst) '())
+    ((> (car lst) limit) lst)
+    (else
+     (cons (car lst)
+           (sieve (remove-mults (car lst) (cdr lst))
+                  limit)))))
+(define (primes-to n)
+  (sieve (range 2 n)
+         (floor (sqrt n))))
+(display (primes-to 1000))
