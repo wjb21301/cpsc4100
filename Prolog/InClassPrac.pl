@@ -67,3 +67,23 @@ grandparent(GP, C) :-
     parent(P, C).
 grandchild(C, GP) :-
     grandparent(GP, C).
+uncle(U, N) :-
+    sibling(U, P),
+    parent(P, N),
+    male(U).
+aunt(A, N) :-
+    sibling(A, P),
+    parent(P, N),
+    female(A).
+cousin(A, B) :-
+    parent(P1, A),
+    parent(P2, B),
+    sibling(P1, P2),
+    A \= B.
+ancestor(A, D) :-
+    parent(A, D).
+ancestor(A, D) :-
+    parent(A, X),
+    ancestor(X, D).
+married(X, Y) :-
+    spouse(X, Y).
