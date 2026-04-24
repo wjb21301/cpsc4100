@@ -6,6 +6,7 @@ male(james).
 male(george).
 male(william).
 male(john).
+male(kevin).
 female(jenny).
 female(melinda).
 female(wynona).
@@ -24,6 +25,10 @@ spouse(robert, wynona).
 spouse(wynona, robert).
 spouse(james, lydia).
 spouse(lydia, james).
+spouse(jack, erica). 
+spouse(erica, jack).
+spouse(william, leah).
+spouse(leah, william).
 %family of jack and jenny, and chris and robert are their children.
 parent(jack,chris).
 parent(jenny,chris).
@@ -45,10 +50,11 @@ parent(wynona, william).
 %family of james and lydia, john is their child.
 parent(james, john).
 parent(lydia, john).
+parent(erica, kevin).
 %rules for our family.
 father(F,C) :- 
     parent(F,C),
-    male(M).
+    male(F).
 mother(M, C) :-
     parent(M, C),
     female(M).
@@ -87,3 +93,27 @@ ancestor(A, D) :-
     ancestor(X, D).
 married(X, Y) :-
     spouse(X, Y).
+related(X, Y) :- ancestor(X, Y).
+related(X, Y) :- ancestor(Y, X).
+related(X, Y) :- ancestor(A, X), ancestor(A, Y), X \= Y.
+related(X, Y) :- spouse(X, Y).
+sibling_count(X, Count) :-
+    findall(S, sibling(X, S), Siblings),
+    sort(Siblings, Unique),
+    length(Unique, Count).
+stepparent(SP, C) :-
+    spouse(SP, P),
+    parent(P, C),
+    \+ parent(SP, C).
+stepchild(C, SP) :-
+    stepparent(SP, C).
+stepsibling(A, B) :-
+    parent(PA, A),
+    parent(PB, B),
+    spouse(PA, PB),
+    \+ parent(PA, B),
+    \+ parent(PB, A),
+    A \= B.
+parent_in_law(PIL, X) :-
+    spouse(X, S),
+    parent(PIL, S).
