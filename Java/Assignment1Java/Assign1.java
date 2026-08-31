@@ -2,7 +2,13 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Assign1 {
+    public static int y = 12;
+    public static int add(int x,int y){
+        return x+y;
+    }
     public static void main(String[] args) {
+        System.out.println(add(4,7));
+        System.out.println(y);
         Random r = new Random();
         Scanner s = new Scanner(System.in);
         System.out.println("Enter a nxn matrix size for multiplication");
