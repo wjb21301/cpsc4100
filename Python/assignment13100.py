@@ -1,7 +1,10 @@
 def validateEmail(email):
     return '@' in email and '.' in email
 def sanitizeInput(message):
-    return message.replace('&','')
+    charDict = {'<' : '' , '>' : '' , ';' : ''}
+    translTable = str.maketrans(charDict)
+    saniInput = message.translate(translTable)
+    return saniInput
 email = input("Please enter an email.")
 message = input("Please enter a message")
 checkedEmail = validateEmail(email)
