@@ -5,8 +5,9 @@ while ($stayLooping) {
     Write-Host "2 - ipconfig"
     Write-Host "3 - arp -a"
     Write-Host "4 - nslookup"
-    Write-Host "5 - clear"
-    Write-Host "6 - exit script"
+    Write-Host "5 - ping"
+    Write-Host "6 - clear"
+    Write-Host "7 - exit script"
     $userInput = Read-Host -Prompt "Please make a selection"
     switch ($userInput) {
         1 {
@@ -94,8 +95,12 @@ while ($stayLooping) {
             $nslookupInput = Read-Host -Prompt "Please enter an ip or hostname to use with nslookup"
             nslookup $nslookupInput
         }
-        5 { clear }
-        6 { $stayLooping = $false }
+        5{
+            $pingInput = Read-Host -Prompt "Please enter an ip or hostname to use with ping."
+            ping $pingInput
+        }
+        6 { clear }
+        7 { $stayLooping = $false }
         default {
             Write-Host "Invalid selection, please enter a number between 1-5"
         }
