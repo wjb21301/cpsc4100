@@ -95,7 +95,7 @@ while ($stayLooping) {
             $nslookupInput = Read-Host -Prompt "Please enter an ip or hostname to use with nslookup"
             nslookup $nslookupInput
         }
-        5{
+        5 {
             $pingInput = Read-Host -Prompt "Please enter an ip or hostname to use with ping."
             ping $pingInput
         }
